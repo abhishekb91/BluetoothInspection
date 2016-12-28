@@ -1,4 +1,4 @@
-package com.wpi.walkermagnet_inspection;
+package com.wpi.walkermagnet_inspection.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
