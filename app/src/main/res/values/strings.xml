@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Bluetooth Inspection</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Home Screen Strings -->
+    <string name="magnet_controller_list">Magnet Controller List</string>
+    
+    <!-- Magnet Controller Menu Options -->
+    <string name="menu_select_configuration">Select Configuration</string>
+    <string name="pair_device">Pair Device</string>
+    <string name="delete_magnet">Delete Magnet</string>
 </resources>

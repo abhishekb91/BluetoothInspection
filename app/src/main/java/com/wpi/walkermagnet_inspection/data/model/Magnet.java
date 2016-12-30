@@ -30,6 +30,30 @@ public class Magnet {
      * Constructor
      *
      */
-    public Magnet() {
+    public Magnet(long id, String name) {
+        mMagnetID = id;
+        mMagnetName = name;
+    }
+
+    /**
+     * Getters and Setters methods
+     */
+
+    public long getId () {
+        return mMagnetID;
+    }
+
+    public void setId (long id) {
+        mMagnetID = id;
+        return;
+    }
+
+    public String getMagnetName() {
+        return mMagnetName;
+    }
+
+    public void setMagnetName(String name) {
+        mMagnetName = name;
+        return;
     }
 }

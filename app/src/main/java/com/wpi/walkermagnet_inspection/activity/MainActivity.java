@@ -4,12 +4,22 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.wpi.walkermagnet_inspection.R;
+import com.wpi.walkermagnet_inspection.adapter.MagnetAdapter;
+import com.wpi.walkermagnet_inspection.data.model.Magnet;
+import com.wpi.walkermagnet_inspection.misc.CustomBottomSheetDialog;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +36,31 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        //Getting all magnet controller of a user
+        ArrayList magnets = new ArrayList();
+        magnets.add(new Magnet(1, "Magnet Controller 1"));
+        magnets.add(new Magnet(2, "Magnet Controller 2"));
+        magnets.add(new Magnet(3, "Magnet Controller 3"));
+        magnets.add(new Magnet(4, "Magnet Controller 4"));
+        magnets.add(new Magnet(5, "Magnet Controller 5"));
+
+        //Getting the MagnetAdapter reference
+        MagnetAdapter magnetAdapter = new MagnetAdapter(this, magnets);
+
+        //Referencing the ListView
+        ListView listView = (ListView) findViewById(R.id.magnets_list);
+
+        //Setting Adapter to the view
+        listView.setAdapter(magnetAdapter);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "postion: " +  position + ", id = " + id, Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }
@@ -50,5 +85,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showPopup(View v) {
+        CustomBottomSheetDialog bottomSheetDialog = CustomBottomSheetDialog.getInstance();
+        bottomSheetDialog.show(getSupportFragmentManager(), "Custom Bottom Sheet");
     }
 }
