@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,13 +56,21 @@ public class MainActivity extends AppCompatActivity {
         //Setting Adapter to the view
         listView.setAdapter(magnetAdapter);
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        //Creating Reference of Bottom Sheet Dialog
+        final CustomBottomSheetDialog bottomSheetDialog = CustomBottomSheetDialog.getInstance();
+
+        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "postion: " +  position + ", id = " + id, Toast.LENGTH_SHORT).show();
-                return true;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Setting the id of the selected magnet
+                bottomSheetDialog.setMagnetControllerId(id);
+
+                //Showing the Bottom sheet
+                bottomSheetDialog.show(getSupportFragmentManager(), "Custom Bottom Sheet");
             }
         });
+
     }
 
     @Override
@@ -85,10 +93,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void showPopup(View v) {
-        CustomBottomSheetDialog bottomSheetDialog = CustomBottomSheetDialog.getInstance();
-        bottomSheetDialog.show(getSupportFragmentManager(), "Custom Bottom Sheet");
     }
 }

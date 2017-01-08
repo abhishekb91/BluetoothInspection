@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.wpi.walkermagnet_inspection.R;
@@ -58,6 +59,11 @@ public class MagnetAdapter extends ArrayAdapter<Magnet>{
 
         //Get current reference ingredient
         Magnet currentMagnet = getItem(position);
+
+        //Disabling the ImageButton Focus event, in order to make the list selectable
+        ImageButton btn = (ImageButton) listMagnetView.findViewById(R.id.magnet_option_btn);
+        btn.setFocusable(false);
+        btn.setClickable(false);
 
         //Setting the magnet name
         TextView magnetName = (TextView) listMagnetView.findViewById(R.id.magnet_name);

@@ -9,4 +9,6 @@
     <string name="menu_select_configuration">Select Configuration</string>
     <string name="pair_device">Pair Device</string>
     <string name="delete_magnet">Delete Magnet</string>
+
+    <string name="delete_magnet_alert">Do you really want to remove the magnet!</string>
 </resources>

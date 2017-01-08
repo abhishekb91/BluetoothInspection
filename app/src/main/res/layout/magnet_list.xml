@@ -9,15 +9,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:textStyle="bold"
-        android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:text="Magnet Controller One" />
+        android:paddingTop="15dp"
+        android:text="Magnet Controller One"
+        android:textStyle="bold" />
 
     <ImageButton
+        android:id="@+id/magnet_option_btn"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/ic_action_navigation_more_vert"
         android:background="@android:color/transparent"
-        android:onClick="showPopup" />
+        android:focusable="false"
+        android:src="@drawable/ic_action_navigation_more_vert" />
 </LinearLayout>
