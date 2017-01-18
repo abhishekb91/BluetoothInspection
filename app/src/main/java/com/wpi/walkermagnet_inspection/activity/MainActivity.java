@@ -1,6 +1,8 @@
 package com.wpi.walkermagnet_inspection.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,14 +20,45 @@ import com.wpi.walkermagnet_inspection.R;
 import com.wpi.walkermagnet_inspection.adapter.MagnetAdapter;
 import com.wpi.walkermagnet_inspection.data.model.Magnet;
 import com.wpi.walkermagnet_inspection.misc.CustomBottomSheetDialog;
+import com.wpi.walkermagnet_inspection.misc.SessionManager;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Session Manager Class
+    SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        // Session class instance
+        session = new SessionManager(getApplicationContext());
+
+        /**
+         * Checking is user is logged in or not,
+         * If user is not logged in redirect it to Login Screen, else continue
+         * */
+        Boolean isLogin = session.checkLogin();
+
+        if (!isLogin) {
+
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            // Closing all the Activities
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Staring Login Activity
+            startActivity(i);
+
+            finish();
+        }
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(magnetAdapter);
 
         //Creating Reference of Bottom Sheet Dialog
-        final CustomBottomSheetDialog bottomSheetDialog = CustomBottomSheetDialog.getInstance();
+        final CustomBottomSheetDialog bottomSheetDialog = new CustomBottomSheetDialog();
 
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override

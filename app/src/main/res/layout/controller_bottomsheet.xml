@@ -80,7 +80,6 @@
         android:id="@+id/delete_magnet_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="deleteMagnet"
         android:orientation="horizontal">
 
         <ImageView

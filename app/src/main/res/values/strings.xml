@@ -4,11 +4,18 @@
 
     <!-- Home Screen Strings -->
     <string name="magnet_controller_list">Magnet Controller List</string>
-    
+
     <!-- Magnet Controller Menu Options -->
     <string name="menu_select_configuration">Select Configuration</string>
     <string name="pair_device">Pair Device</string>
     <string name="delete_magnet">Delete Magnet</string>
 
     <string name="delete_magnet_alert">Do you really want to remove the magnet!</string>
+
+    <!-- Login Screen Strings -->
+    <string name="login">Login</string>
+    <string name="user_name">Name</string>
+    <string name="user_email">Email</string>
+    <string name="submit">Submit</string>
+    <string name="error_validation_error">Please Enter All the Fields</string>
 </resources>

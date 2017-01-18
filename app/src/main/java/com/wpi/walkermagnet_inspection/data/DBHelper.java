@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.wpi.walkermagnet_inspection.app.App;
+import com.wpi.walkermagnet_inspection.data.model.User;
+import com.wpi.walkermagnet_inspection.data.repo.UserRepo;
 
 /**
  * Created by abhishek on 12/27/2016.
@@ -32,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //All necessary tables you like to create will create here
-        //db.execSQL(UserRepo.createTable());
+        db.execSQL(UserRepo.createTable());
     }
 
     @Override
@@ -40,7 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d(TAG, String.format("SQLiteDatabase.onUpgrade(%d -> %d)", oldVersion, newVersion));
 
         // Drop table if existed, all data will be gone!!!
-        //db.execSQL("DROP TABLE IF EXISTS " + User.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + User.TABLE);
         onCreate(db);
     }
 }

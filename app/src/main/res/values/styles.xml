@@ -24,4 +24,18 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
+
+    <style name="login_label">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:capitalize">sentences</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="login_fields">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:capitalize">sentences</item>
+        <item name="android:layout_weight">2</item>
+    </style>
 </resources>
