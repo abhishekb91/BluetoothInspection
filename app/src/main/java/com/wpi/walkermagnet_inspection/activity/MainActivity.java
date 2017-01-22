@@ -2,23 +2,19 @@ package com.wpi.walkermagnet_inspection.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.wpi.walkermagnet_inspection.R;
 import com.wpi.walkermagnet_inspection.adapter.MagnetAdapter;
-import com.wpi.walkermagnet_inspection.data.model.Magnet;
+import com.wpi.walkermagnet_inspection.data.repo.MagnetRepo;
 import com.wpi.walkermagnet_inspection.misc.CustomBottomSheetDialog;
 import com.wpi.walkermagnet_inspection.misc.SessionManager;
 
@@ -72,13 +68,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Creating Magnets repo object
+        MagnetRepo magnetRepo = new MagnetRepo();
+
         //Getting all magnet controller of a user
-        ArrayList magnets = new ArrayList();
-        magnets.add(new Magnet(1, "Magnet Controller 1"));
-        magnets.add(new Magnet(2, "Magnet Controller 2"));
-        magnets.add(new Magnet(3, "Magnet Controller 3"));
-        magnets.add(new Magnet(4, "Magnet Controller 4"));
-        magnets.add(new Magnet(5, "Magnet Controller 5"));
+        ArrayList magnets = magnetRepo.magnets();
 
         //Getting the MagnetAdapter reference
         MagnetAdapter magnetAdapter = new MagnetAdapter(this, magnets);

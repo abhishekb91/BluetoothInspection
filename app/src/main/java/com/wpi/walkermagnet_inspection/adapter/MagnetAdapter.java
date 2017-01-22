@@ -11,7 +11,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.wpi.walkermagnet_inspection.R;
+import com.wpi.walkermagnet_inspection.activity.MainActivity;
 import com.wpi.walkermagnet_inspection.data.model.Magnet;
+import com.wpi.walkermagnet_inspection.misc.CustomBottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -46,7 +48,7 @@ public class MagnetAdapter extends ArrayAdapter<Magnet>{
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         // Check if the existing view is being reused, otherwise inflate the view
         View listMagnetView = convertView;
@@ -62,8 +64,20 @@ public class MagnetAdapter extends ArrayAdapter<Magnet>{
 
         //Disabling the ImageButton Focus event, in order to make the list selectable
         ImageButton btn = (ImageButton) listMagnetView.findViewById(R.id.magnet_option_btn);
-        btn.setFocusable(false);
-        btn.setClickable(false);
+
+        //Creating Reference of Bottom Sheet Dialog
+        final CustomBottomSheetDialog bottomSheetDialog = new CustomBottomSheetDialog();
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Setting the id of the selected magnet
+                bottomSheetDialog.setMagnetControllerId(getItemId(position));
+
+                //Showing the Bottom sheet
+                bottomSheetDialog.show( ((MainActivity)mContext).getSupportFragmentManager(), "Custom Bottom Sheet");
+            }
+        });
 
         //Setting the magnet name
         TextView magnetName = (TextView) listMagnetView.findViewById(R.id.magnet_name);
