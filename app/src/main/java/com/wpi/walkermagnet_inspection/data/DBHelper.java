@@ -7,6 +7,7 @@ import android.util.Log;
 import com.wpi.walkermagnet_inspection.app.App;
 import com.wpi.walkermagnet_inspection.data.model.Magnet;
 import com.wpi.walkermagnet_inspection.data.model.User;
+import com.wpi.walkermagnet_inspection.data.repo.ConfigParameterRepo;
 import com.wpi.walkermagnet_inspection.data.repo.MagnetRepo;
 import com.wpi.walkermagnet_inspection.data.repo.UserRepo;
 
@@ -24,13 +25,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = DBHelper.class.getSimpleName().toString();
 
+    public DBHelper() {
+        super(App.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
     @Override
     public void onConfigure(SQLiteDatabase db) {
         db.setForeignKeyConstraintsEnabled(true);
-    }
-
-    public DBHelper( ) {
-        super(App.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -38,9 +39,11 @@ public class DBHelper extends SQLiteOpenHelper {
         //All necessary tables you like to create will create here
         db.execSQL(UserRepo.createTable());
         db.execSQL(MagnetRepo.createTable());
+        db.execSQL(ConfigParameterRepo.createTable());
 
         //Inserting Data into table
         db.execSQL(MagnetRepo.sampleData());
+        db.execSQL(ConfigParameterRepo.sampleData());
     }
 
     @Override
