@@ -7,7 +7,8 @@ import android.util.Log;
 import com.wpi.walkermagnet_inspection.app.App;
 import com.wpi.walkermagnet_inspection.data.model.Magnet;
 import com.wpi.walkermagnet_inspection.data.model.User;
-import com.wpi.walkermagnet_inspection.data.repo.ConfigParameterRepo;
+import com.wpi.walkermagnet_inspection.data.repo.ConfigurationRepo;
+import com.wpi.walkermagnet_inspection.data.repo.ParameterRepo;
 import com.wpi.walkermagnet_inspection.data.repo.MagnetRepo;
 import com.wpi.walkermagnet_inspection.data.repo.UserRepo;
 
@@ -39,11 +40,14 @@ public class DBHelper extends SQLiteOpenHelper {
         //All necessary tables you like to create will create here
         db.execSQL(UserRepo.createTable());
         db.execSQL(MagnetRepo.createTable());
-        db.execSQL(ConfigParameterRepo.createTable());
+        db.execSQL(ParameterRepo.createTable());
+        db.execSQL(ConfigurationRepo.createTable());
+        db.execSQL(ConfigurationRepo.createTableConfigParameter());
 
         //Inserting Data into table
         db.execSQL(MagnetRepo.sampleData());
-        db.execSQL(ConfigParameterRepo.sampleData());
+        db.execSQL(ParameterRepo.sampleData());
+        db.execSQL(ConfigurationRepo.sampleData());
     }
 
     @Override

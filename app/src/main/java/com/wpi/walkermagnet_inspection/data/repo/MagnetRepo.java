@@ -1,12 +1,16 @@
 package com.wpi.walkermagnet_inspection.data.repo;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.wpi.walkermagnet_inspection.data.DatabaseManager;
 import com.wpi.walkermagnet_inspection.data.model.Magnet;
+import com.wpi.walkermagnet_inspection.data.model.User;
 
 import java.util.ArrayList;
+
+import static android.R.attr.password;
 
 
 /**
@@ -37,10 +41,10 @@ public class MagnetRepo {
     /**
      * This function returns query for dummy magnet data
      *
-     * @return
+     * @return magnet insert query
      */
-    public static String sampleData(){
-        String query = "INSERT INTO "+Magnet.TABLE+" (`"+Magnet.KEY_MAGNET_ID+"`, `"+Magnet.KEY_NAME+"`) VALUES " +
+    public static String sampleData() {
+        String query = "INSERT INTO " + Magnet.TABLE + " (`" + Magnet.KEY_MAGNET_ID + "`, `" + Magnet.KEY_NAME + "`) VALUES " +
                 "(1,'Magnet Controller One'), (2,'Magnet Controller Two'), (3,'Magnet Controller Three'), (4,'Magnet Controller Four'), (5,'Magnet Controller Five');";
 
         return query;
@@ -76,7 +80,7 @@ public class MagnetRepo {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "Error while getting cuisine information");
+            Log.d(TAG, "Error while getting magnets information");
         } finally {
             cursor.close();
             DatabaseManager.getInstance().closeDatabase();
@@ -85,5 +89,43 @@ public class MagnetRepo {
         cursor.close();
 
         return magnets;
+    }
+
+    /**
+     * Returns Magnet information
+     *
+     * @param id id of the magnet controller
+     * @return magnet information
+     */
+    public Magnet magnet(long id) {
+
+        //Creating Magnet Object
+        Magnet magnet = new Magnet(id);
+
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+
+        String selectQuery = " SELECT m.* " +
+                " FROM " + Magnet.TABLE + " as m" +
+                " WHERE m." + Magnet.KEY_MAGNET_ID + " = '" + id + "';";
+
+        Log.d(TAG, selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    magnet.setMagnetName(cursor.getString(cursor.getColumnIndex(Magnet.KEY_NAME)));
+                    magnet.setConfigurationId(cursor.getLong(cursor.getColumnIndex(Magnet.KEY_CONFIG_ID)));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while getting user information");
+        } finally {
+            cursor.close();
+            DatabaseManager.getInstance().closeDatabase();
+        }
+
+        cursor.close();
+        return magnet;
     }
 }

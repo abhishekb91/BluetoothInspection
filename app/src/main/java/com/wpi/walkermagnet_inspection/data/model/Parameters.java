@@ -4,7 +4,7 @@ package com.wpi.walkermagnet_inspection.data.model;
  * Created by abhis on 2/1/2017.
  */
 
-public class ConfigParameters {
+public class Parameters {
     /**
      */
     public static final String TABLE = "parameters";
@@ -27,7 +27,7 @@ public class ConfigParameters {
     /**
      * Constructor
      */
-    public ConfigParameters(long id, String name) {
+    public Parameters(long id, String name) {
         mParameterID = id;
         mTitle = name;
     }
@@ -42,7 +42,6 @@ public class ConfigParameters {
 
     public void setId(long id) {
         mParameterID = id;
-        return;
     }
 
     public String getParameterTitle() {
@@ -51,6 +50,5 @@ public class ConfigParameters {
 
     public void setParameterTitle(String title) {
         mTitle = title;
-        return;
     }
 }

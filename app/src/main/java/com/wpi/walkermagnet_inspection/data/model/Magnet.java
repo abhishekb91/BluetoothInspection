@@ -11,25 +11,28 @@ public class Magnet {
 
     /**
      * Table Columns names
-     *
      */
     public static final String KEY_MAGNET_ID = "magnet_id";
     public static final String KEY_NAME = "name";
+    public static final String KEY_CONFIG_ID = "configuration_id";
     public static final String KEY_IS_DELETE = "is_delete";
 
     /**
      * Defining Class Attributes
-     *
      */
     private long mMagnetID;
     private String mMagnetName;
-    private Boolean mIsDelete ;
+    private long mConfigurationId;
+    private Boolean mIsDelete;
 
 
     /**
      * Constructor
-     *
      */
+    public Magnet(long id) {
+        mMagnetID = id;
+    }
+
     public Magnet(long id, String name) {
         mMagnetID = id;
         mMagnetName = name;
@@ -39,13 +42,12 @@ public class Magnet {
      * Getters and Setters methods
      */
 
-    public long getId () {
+    public long getId() {
         return mMagnetID;
     }
 
-    public void setId (long id) {
+    public void setId(long id) {
         mMagnetID = id;
-        return;
     }
 
     public String getMagnetName() {
@@ -54,6 +56,13 @@ public class Magnet {
 
     public void setMagnetName(String name) {
         mMagnetName = name;
-        return;
+    }
+
+    public long getConfigurationId() {
+        return mConfigurationId;
+    }
+
+    public void setConfigurationId(long configurationId) {
+        mConfigurationId = configurationId;
     }
 }

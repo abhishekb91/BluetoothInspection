@@ -25,6 +25,7 @@
         android:layout_weight="7"></ListView>
 
     <Button
+        android:id="@+id/save_configuration_btn"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"

@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.wpi.walkermagnet_inspection.R;
-import com.wpi.walkermagnet_inspection.data.model.ConfigParameters;
+import com.wpi.walkermagnet_inspection.activity.ConfigurationActivity;
+import com.wpi.walkermagnet_inspection.data.model.Parameters;
 
 import java.util.ArrayList;
 
@@ -18,22 +21,26 @@ import java.util.ArrayList;
  * Created by abhishek on 2/1/2017.
  */
 
-public class ConfigurationParameterAdapter extends ArrayAdapter<ConfigParameters> {
+public class ConfigurationParameterAdapter extends ArrayAdapter<Parameters> {
 
     /**
      * Private attribute to save magnets
      */
-    private ArrayList<ConfigParameters> mConfiguration;
+    private ArrayList<Parameters> mConfiguration;
 
     /**
      * Private attribute to save context
      */
     private Context mContext;
 
-    public ConfigurationParameterAdapter(Activity context, ArrayList<ConfigParameters> configuration) {
+    private ArrayList mSelectedParameters;
+
+    public ConfigurationParameterAdapter(Activity context, ArrayList<Parameters> configuration, ArrayList selectedParameters) {
         super(context, 0, configuration);
 
         mConfiguration = configuration;
+
+        mSelectedParameters = selectedParameters;
 
         mContext = context;
     }
@@ -57,12 +64,32 @@ public class ConfigurationParameterAdapter extends ArrayAdapter<ConfigParameters
         }
 
         //Get current reference ingredient
-        ConfigParameters currentParameter = getItem(position);
+        Parameters currentParameter = getItem(position);
 
+        //Referencing Parameter Title
+        TextView parameterName = (TextView) listParameterView.findViewById(R.id.configuration_title);
 
         //Setting the parameter name
-        TextView parameterName = (TextView) listParameterView.findViewById(R.id.configuration_title);
         parameterName.setText(currentParameter.getParameterTitle());
+
+        //Referencing Parameter Switch
+        Switch configSwitch = (Switch) listParameterView.findViewById(R.id.configuration_value);
+
+        //If parameter was already selected check it, else ignore
+        if (mSelectedParameters.contains(getItemId(position))) {
+            configSwitch.setChecked(true);
+        }
+
+        //Listening switch to check if user has selected a parameter or not
+        configSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //Save the id of the parameter in the parent activity
+                if (mContext instanceof ConfigurationActivity) {
+                    ((ConfigurationActivity) mContext).setCheckedConfiguration(getItemId(position));
+                }
+            }
+        });
 
         //Returning the Magnet list
         return listParameterView;

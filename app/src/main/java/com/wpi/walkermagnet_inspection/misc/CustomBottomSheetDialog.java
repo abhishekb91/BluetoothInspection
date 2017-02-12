@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.wpi.walkermagnet_inspection.R;
 import com.wpi.walkermagnet_inspection.activity.ConfigurationActivity;
 
+import static android.R.attr.id;
+
 /**
  * Created by abhishek on 12/29/2016.
  */
@@ -27,12 +29,6 @@ public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
      * Property to store magnet controller id
      */
     private long mMagnetControllerId;
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
-    }
-
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
 
         @Override
@@ -46,6 +42,11 @@ public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
         public void onSlide(@NonNull View bottomSheet, float slideOffset) {
         }
     };
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return super.onCreateDialog(savedInstanceState);
+    }
 
     @Override
     public void setupDialog(final Dialog dialog, int style) {
@@ -80,7 +81,8 @@ public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
                                 dialog.dismiss();
 
                                 Toast.makeText(getActivity(), "Magnet with id = " + mMagnetControllerId + " successfully deleted", Toast.LENGTH_SHORT).show();
-                            }})
+                            }
+                        })
                         .setNegativeButton(android.R.string.no, null).show();
             }
         });
@@ -96,6 +98,9 @@ public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
 
                 Intent i = new Intent(getActivity(), ConfigurationActivity.class);
 
+                //Passing Magnet Controller Id
+                i.putExtra("magnetControllerId", mMagnetControllerId);
+
                 // Staring Login Activity
                 startActivity(i);
             }
@@ -109,7 +114,6 @@ public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
      */
     public void setMagnetControllerId(long id) {
         mMagnetControllerId = id;
-        return;
     }
 
 }
