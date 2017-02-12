@@ -33,6 +33,7 @@ public class MagnetRepo {
         String query = "CREATE TABLE " + Magnet.TABLE + "("
                 + Magnet.KEY_MAGNET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Magnet.KEY_NAME + " TEXT NOT NULL,"
+                + Magnet.KEY_CONFIG_ID + " INTEGER NOT NULL,"
                 + Magnet.KEY_IS_DELETE + " INTEGER DEFAULT 0 ); ";
 
         return query;
@@ -44,8 +45,8 @@ public class MagnetRepo {
      * @return magnet insert query
      */
     public static String sampleData() {
-        String query = "INSERT INTO " + Magnet.TABLE + " (`" + Magnet.KEY_MAGNET_ID + "`, `" + Magnet.KEY_NAME + "`) VALUES " +
-                "(1,'Magnet Controller One'), (2,'Magnet Controller Two'), (3,'Magnet Controller Three'), (4,'Magnet Controller Four'), (5,'Magnet Controller Five');";
+        String query = "INSERT INTO " + Magnet.TABLE + " (`" + Magnet.KEY_MAGNET_ID + "`, `" + Magnet.KEY_NAME + "`, `" + Magnet.KEY_CONFIG_ID + "`) VALUES " +
+                "(1,'Magnet Controller One',1), (2,'Magnet Controller Two',2), (3,'Magnet Controller Three',3), (4,'Magnet Controller Four',4), (5,'Magnet Controller Five',5);";
 
         return query;
     }
