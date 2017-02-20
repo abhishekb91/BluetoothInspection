@@ -1,26 +1,20 @@
 package com.wpi.walkermagnet_inspection.data.repo;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.ListView;
-
 import com.wpi.walkermagnet_inspection.data.DatabaseManager;
 import com.wpi.walkermagnet_inspection.data.model.Configuration;
 import com.wpi.walkermagnet_inspection.data.model.Parameters;
 import com.wpi.walkermagnet_inspection.data.model.Magnet;
-import com.wpi.walkermagnet_inspection.data.model.User;
-
 import java.util.ArrayList;
-
-import static android.R.attr.password;
 
 /**
  * Created by abhishek on 2/1/2017.
  */
 
 public class ParameterRepo {
+
     /**
      * Class name for Logging
      */
@@ -93,7 +87,6 @@ public class ParameterRepo {
         return parameters;
     }
 
-
     /**
      * This function is used to get all the parameters selected for a configuration
      *
@@ -130,4 +123,5 @@ public class ParameterRepo {
 
         return config_parameter;
     }
+
 }

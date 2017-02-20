@@ -9,26 +9,20 @@ import android.content.SharedPreferences;
 
 public class SessionManager {
 
-    // Shared Preferences
-    private SharedPreferences pref;
-
-    // Editor for Shared preferences
-    private SharedPreferences.Editor editor;
-
-    // Context
-    private Context _context;
-
-    // Shared pref mode
-    private int PRIVATE_MODE = 0;
-
     // Sharedpref file name
     private static final String PREF_NAME = "walkerMagnetics";
-
     // All Shared Preferences Keys
     private static final String IS_LOGIN = "IsLoggedIn";
-
     // User id
     private static final String KEY_USER_ID = "userId";
+    // Shared Preferences
+    private SharedPreferences pref;
+    // Editor for Shared preferences
+    private SharedPreferences.Editor editor;
+    // Context
+    private Context _context;
+    // Shared pref mode
+    private int PRIVATE_MODE = 0;
 
 
     // Constructor
@@ -83,7 +77,7 @@ public class SessionManager {
         // return user
         return user;
     }*/
-    public long getUserDetails(){
+    public long getUserId() {
 
         long userId = pref.getLong(KEY_USER_ID, -1);
 

@@ -32,9 +32,12 @@ public class MagnetRepo {
     public static String createTable() {
         String query = "CREATE TABLE " + Magnet.TABLE + "("
                 + Magnet.KEY_MAGNET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + Magnet.KEY_USER_ID + " INTEGER NOT NULL,"
                 + Magnet.KEY_NAME + " TEXT NOT NULL,"
                 + Magnet.KEY_CONFIG_ID + " INTEGER NOT NULL,"
                 + Magnet.KEY_IS_DELETE + " INTEGER DEFAULT 0 ); ";
+
+        Log.d("Query", query);
 
         return query;
     }
@@ -45,8 +48,8 @@ public class MagnetRepo {
      * @return magnet insert query
      */
     public static String sampleData() {
-        String query = "INSERT INTO " + Magnet.TABLE + " (`" + Magnet.KEY_MAGNET_ID + "`, `" + Magnet.KEY_NAME + "`, `" + Magnet.KEY_CONFIG_ID + "`) VALUES " +
-                "(1,'Magnet Controller One',1), (2,'Magnet Controller Two',2), (3,'Magnet Controller Three',3), (4,'Magnet Controller Four',4), (5,'Magnet Controller Five',5);";
+        String query = "INSERT INTO " + Magnet.TABLE + " (`" + Magnet.KEY_MAGNET_ID + "`,`" + Magnet.KEY_USER_ID + "`, `" + Magnet.KEY_NAME + "`, `" + Magnet.KEY_CONFIG_ID + "`) VALUES " +
+                "(1,1,'Magnet Controller One',1), (2,1,'Magnet Controller Two',2), (3,1,'Magnet Controller Three',3), (4,1,'Magnet Controller Four',4), (5,1,'Magnet Controller Five',5);";
 
         return query;
     }
@@ -54,16 +57,18 @@ public class MagnetRepo {
     /**
      * This function is used to get list of all magnets in the application
      *
+     * @param userId User's Id
      * @return List of all magnets
      */
-    public ArrayList magnets() {
+    public ArrayList magnets(long userId) {
 
         ArrayList magnets = new ArrayList();
 
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
 
         String selectQuery = " SELECT m.* " +
-                " FROM " + Magnet.TABLE + " as m;";
+                " FROM " + Magnet.TABLE + " as m" +
+                " WHERE m." + Magnet.KEY_USER_ID + "=" + userId;
 
         Log.d(TAG, selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -128,5 +133,27 @@ public class MagnetRepo {
 
         cursor.close();
         return magnet;
+    }
+
+    /**
+     * Removes the Magnet controller from the User's List
+     *
+     * @param magnetId controller id
+     * @param userId   Id of the User
+     * @return true if successfully removed else return false
+     */
+    public Boolean remove(long magnetId, long userId) {
+
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+
+        String deleteQuery = "DELETE FROM " + Magnet.TABLE +
+                " WHERE " + Magnet.KEY_USER_ID + "=" + userId +
+                " AND " + Magnet.KEY_MAGNET_ID + "=" + magnetId;
+
+        db.execSQL(deleteQuery);
+
+        DatabaseManager.getInstance().closeDatabase();
+
+        return true;
     }
 }

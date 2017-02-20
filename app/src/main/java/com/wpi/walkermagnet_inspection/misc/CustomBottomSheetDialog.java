@@ -2,6 +2,7 @@ package com.wpi.walkermagnet_inspection.misc;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +17,9 @@ import android.widget.Toast;
 
 import com.wpi.walkermagnet_inspection.R;
 import com.wpi.walkermagnet_inspection.activity.ConfigurationActivity;
-
-import static android.R.attr.id;
+import com.wpi.walkermagnet_inspection.activity.MainActivity;
+import com.wpi.walkermagnet_inspection.data.model.Magnet;
+import com.wpi.walkermagnet_inspection.data.repo.MagnetRepo;
 
 /**
  * Created by abhishek on 12/29/2016.
@@ -26,9 +28,12 @@ import static android.R.attr.id;
 public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
 
     /**
-     * Property to store magnet controller id
+     * Property to store magnet controllers
      */
     private long mMagnetControllerId;
+    private Context mAppContext;
+    private int mControllerPosition;
+
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
 
         @Override
@@ -61,9 +66,13 @@ public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
         }
 
+        MagnetRepo magnetRepo = new MagnetRepo();
+
+        Magnet magnet = magnetRepo.magnet(mMagnetControllerId);
+
         //Referencing Magnet name TextView
-        TextView magnetName = (TextView) contentView.findViewById(R.id.magnet_controller_name);
-        magnetName.setText("Magnet Controller " + mMagnetControllerId);
+        final TextView magnetName = (TextView) contentView.findViewById(R.id.magnet_controller_name);
+        magnetName.setText(magnet.getMagnetName());
 
         //Referencing Delete Row
         LinearLayout deleteMagnetRow = (LinearLayout) contentView.findViewById(R.id.delete_magnet_row);
@@ -80,7 +89,8 @@ public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
                                 //Close the dialog
                                 dialog.dismiss();
 
-                                Toast.makeText(getActivity(), "Magnet with id = " + mMagnetControllerId + " successfully deleted", Toast.LENGTH_SHORT).show();
+                                //Remove Magnet Controller
+                                ((MainActivity) mAppContext).deleteMagnetController(mMagnetControllerId, mControllerPosition);
                             }
                         })
                         .setNegativeButton(android.R.string.no, null).show();
@@ -112,8 +122,10 @@ public class CustomBottomSheetDialog extends BottomSheetDialogFragment {
      *
      * @param id magnet controller id
      */
-    public void setMagnetControllerId(long id) {
+    public void setControllerAttr(long id, Context context, int position) {
         mMagnetControllerId = id;
+        mAppContext = context;
+        mControllerPosition = position;
     }
 
 }

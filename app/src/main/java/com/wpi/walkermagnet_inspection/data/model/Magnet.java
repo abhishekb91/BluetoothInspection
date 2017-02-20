@@ -13,6 +13,7 @@ public class Magnet {
      * Table Columns names
      */
     public static final String KEY_MAGNET_ID = "magnet_id";
+    public static final String KEY_USER_ID = "user_id";
     public static final String KEY_NAME = "name";
     public static final String KEY_CONFIG_ID = "configuration_id";
     public static final String KEY_IS_DELETE = "is_delete";
@@ -21,6 +22,7 @@ public class Magnet {
      * Defining Class Attributes
      */
     private long mMagnetID;
+    private long mUserID;
     private String mMagnetName;
     private long mConfigurationId;
     private Boolean mIsDelete;
@@ -48,6 +50,14 @@ public class Magnet {
 
     public void setId(long id) {
         mMagnetID = id;
+    }
+
+    private long getmUserID() {
+        return mUserID;
+    }
+
+    private void setmUserID(long userId) {
+        mUserID = userId;
     }
 
     public String getMagnetName() {

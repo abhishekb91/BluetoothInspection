@@ -72,7 +72,7 @@ public class MagnetAdapter extends ArrayAdapter<Magnet>{
             @Override
             public void onClick(View v) {
                 //Setting the id of the selected magnet
-                bottomSheetDialog.setMagnetControllerId(getItemId(position));
+                bottomSheetDialog.setControllerAttr(getItemId(position), mContext, position);
 
                 //Showing the Bottom sheet
                 bottomSheetDialog.show( ((MainActivity)mContext).getSupportFragmentManager(), "Custom Bottom Sheet");

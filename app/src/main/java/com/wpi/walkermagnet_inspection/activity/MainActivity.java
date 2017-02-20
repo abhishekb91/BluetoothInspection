@@ -6,11 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.wpi.walkermagnet_inspection.R;
 import com.wpi.walkermagnet_inspection.adapter.MagnetAdapter;
@@ -24,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Session Manager Class
     SessionManager session;
+
+    ArrayList magnets;
+
+    MagnetAdapter magnetAdapter;
+
+    MagnetRepo magnetRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,34 +77,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Creating Magnets repo object
-        MagnetRepo magnetRepo = new MagnetRepo();
+        magnetRepo = new MagnetRepo();
 
         //Getting all magnet controller of a user
-        ArrayList magnets = magnetRepo.magnets();
+        magnets = magnetRepo.magnets(session.getUserId());
 
         //Getting the MagnetAdapter reference
-        MagnetAdapter magnetAdapter = new MagnetAdapter(this, magnets);
+        magnetAdapter = new MagnetAdapter(this, magnets);
 
         //Referencing the ListView
         ListView listView = (ListView) findViewById(R.id.magnets_list);
 
         //Setting Adapter to the view
         listView.setAdapter(magnetAdapter);
-
-        //Creating Reference of Bottom Sheet Dialog
-        final CustomBottomSheetDialog bottomSheetDialog = new CustomBottomSheetDialog();
-
-        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                //Setting the id of the selected magnet
-                bottomSheetDialog.setMagnetControllerId(id);
-
-                //Showing the Bottom sheet
-                bottomSheetDialog.show(getSupportFragmentManager(), "Custom Bottom Sheet");
-            }
-        });
 
     }
 
@@ -120,5 +113,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Function to remove a controller from the list
+     *
+     * @param controllerId id of the magnet controller
+     * @param position     position of the controller on the list
+     */
+    public void deleteMagnetController(long controllerId, int position) {
+
+        //Remove controller from the database
+        Boolean isDelete = magnetRepo.remove(controllerId, session.getUserId());
+
+        if (isDelete) {
+            //Remove and update the list
+            magnets.remove(position);
+            magnetAdapter.notifyDataSetChanged();
+
+            //Show notification to the user
+            Toast.makeText(getApplicationContext(), "Magnet Controller successfully deleted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Error Occurred, Please try later", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
