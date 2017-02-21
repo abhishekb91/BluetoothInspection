@@ -47,7 +47,8 @@
         <EditText
             android:id="@+id/user_email"
             style="@style/login_fields"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
     </LinearLayout>
 
     <Button
